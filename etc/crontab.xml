@@ -4,5 +4,8 @@
         <job name="creatuity_optimumimages_cron_optimizer" instance="Creatuity\OptimumImages\Cron\Optimizer" method="execute">
             <schedule>* * * * *</schedule>
         </job>
+        <job name="creatuity_optimumimages_cron_cleaner" instance="Creatuity\OptimumImages\Cron\Cleaner" method="execute">
+            <schedule>0 0 0 * *</schedule>
+        </job>
     </group>
 </config>

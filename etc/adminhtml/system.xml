@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="creatuity" translate="label" sortOrder="1000">
+            <label>Creatuity</label>
+        </tab>
+        <section id="creatuity_optimumimages" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Optimum Images</label>
+            <tab>creatuity</tab>
+            <resource>Creatuity_OptimumImages::images_config</resource>
+            <group id="optimizer" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0">
+                <label>Image Optimizer Configuration</label>
+                <field id="batch_size" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Cron Batch Size</label>
+                    <comment>The number of images that should be processed per cron task run.</comment>
+                </field>
+                <field id="image_quality" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Image Quality</label>
+                    <comment>0-100. The image quality of the converted webp images.</comment>
+                </field>
+                <field id="mobile_file_extra" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Mobile File Extra</label>
+                    <comment>The string added the the end of the mobile file name. Example: "_mobile"</comment>
+                </field>
+                <field id="tablet_file_extra" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Tablet File Extra</label>
+                    <comment>The string added the the end of the mobile file name. Example: "_tablet"</comment>
+                </field>
+                <field id="desktop_file_extra" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Desktop File Extra</label>
+                    <comment>The string added the the end of the mobile file name. Example: "_desktop"</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <creatuity_optimumimages>
+            <optimizer>
+                <batch_size>1</batch_size>
+                <image_quality>100</image_quality>
+                <mobile_file_extra>_mobile</mobile_file_extra>
+                <tablet_file_extra>_tablet</tablet_file_extra>
+                <desktop_file_extra>_desktop</desktop_file_extra>
+            </optimizer>
+        </creatuity_optimumimages>
+    </default>
+</config>

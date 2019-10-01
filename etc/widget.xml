@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+    <widget class="Creatuity\OptimumImages\Block\Widget\Image" id="creatuity_optimumimages_image">
+        <label>Creatuity Optimum Image</label>
+        <description>Adds picture tag with optimum image fallbacks</description>
+        <parameters>
+            <parameter name="image_key" sort_order="10" visible="true" xsi:type="text">
+                <label>Image Key</label>
+            </parameter>
+        </parameters>
+    </widget>
+</widgets>

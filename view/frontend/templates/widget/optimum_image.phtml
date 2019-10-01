@@ -1,0 +1,10 @@
+<?php
+/** @var Creatuity\OptimumImages\Block\Widget\Image $block */
+$image = $block->getImage();
+?>
+<picture>
+    <source media="(max-width: 465px)" srcset="<?php echo $block->getMediaUrl($image->getMobileLocation()); ?>" type="image/webp">
+    <source media="(max-width: 600px)" srcset="<?php echo $block->getMediaUrl($image->getTabletLocation()); ?>" type="image/webp">
+    <source srcset="<?php echo $block->getMediaUrl($image->getDesktopLocation()); ?>" type="image/webp">
+    <img src="<?php echo $block->getMediaUrl($image->getOriginLocation()); ?>" alt="<?php echo $image->getAlt()?>">
+</picture>

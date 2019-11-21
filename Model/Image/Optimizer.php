@@ -87,7 +87,7 @@ class Optimizer
     {
         $dstImage = $this->gdImaging->loadNewImage($dstWidth, $dstHeight);
 
-        if( ! $this->gdImaging->resampleImage($srcImage, $dstImage, 0, 0, 0, 0, $dstWidth, $dstHeight, $srcWidth, $srcHeight) ) {
+        if( ! $this->gdImaging->resampleImage($dstImage, $srcImage, 0, 0, 0, 0, $dstWidth, $dstHeight, $srcWidth, $srcHeight) ) {
             throw new \Exception(__("Image could not be resized"));
         }
 

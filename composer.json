@@ -11,7 +11,10 @@
             "email": "wguthrie@creatuity.com"
         }
     ],
-    "require": {},
+    "require": {
+        "ext-gd": "*",
+        "ext-json": "*"
+    },
     "type": "magento2-module",
     "version": "0.2.1",
     "autoload": {

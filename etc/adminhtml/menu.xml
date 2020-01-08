@@ -8,5 +8,12 @@
              resource="Creatuity_OptimumImages::images"
              parent="Magento_Backend::content_elements"
              action="creatuity_optimumimages/images" />
+        <add id="Creatuity_OptimumImages::sliders"
+             title="Optimum Sliders"
+             module="Creatuity_OptimumImages"
+             sortOrder="70"
+             resource="Creatuity_OptimumImages::sliders"
+             parent="Magento_Backend::content_elements"
+             action="creatuity_optimumimages/sliders" />
     </menu>
 </config>

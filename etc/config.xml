@@ -3,7 +3,7 @@
     <default>
         <creatuity_optimumimages>
             <optimizer>
-                <batch_size>1</batch_size>
+                <batch_size>2</batch_size>
                 <image_quality>100</image_quality>
                 <mobile_file_extra>_mobile</mobile_file_extra>
                 <tablet_file_extra>_tablet</tablet_file_extra>

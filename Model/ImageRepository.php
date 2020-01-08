@@ -1,16 +1,17 @@
 <?php
+
 namespace Creatuity\OptimumImages\Model;
 
 use Creatuity\OptimumImages\Api\Data\ImageInterface;
-use Creatuity\OptimumImages\Api\ImageRepositoryInterface;
 use Creatuity\OptimumImages\Api\Data\ImageSearchResultsInterfaceFactory;
+use Creatuity\OptimumImages\Api\ImageRepositoryInterface;
 use Creatuity\OptimumImages\Model\ResourceModel\Image as ImageResource;
 use Creatuity\OptimumImages\Model\ResourceModel\Image\CollectionFactory;
 use Magento\Framework\Api\FilterFactory;
 use Magento\Framework\Api\Search\FilterGroupFactory;
+use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
 use Magento\Framework\Api\SearchCriteriaFactory;
 use Magento\Framework\Api\SearchCriteriaInterface;
-use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
@@ -18,20 +19,37 @@ use Magento\Framework\Model\AbstractModel;
 
 class ImageRepository implements ImageRepositoryInterface
 {
+    /**
+     * @var ImageResource
+     */
     private $resource;
-
+    /**
+     * @var ImageFactory
+     */
     private $imageFactory;
-
+    /**
+     * @var CollectionFactory
+     */
     private $imageCollectionFactory;
-
+    /**
+     * @var CollectionProcessorInterface
+     */
     private $collectionProcessor;
-
+    /**
+     * @var ImageSearchResultsInterfaceFactory
+     */
     private $searchResultsFactory;
-
+    /**
+     * @var SearchCriteriaFactory
+     */
     private $searchCriteriaFactory;
-
+    /**
+     * @var FilterFactory
+     */
     private $filterFactory;
-
+    /**
+     * @var FilterGroupFactory
+     */
     private $filterGroupFactory;
 
     public function __construct(
@@ -54,7 +72,7 @@ class ImageRepository implements ImageRepositoryInterface
         $this->filterGroupFactory = $filterGroupFactory;
     }
 
-    public function save(ImageInterface $image)
+    public function save(ImageInterface $image): ImageInterface
     {
         try {
             /** @var AbstractModel $image */
@@ -65,7 +83,7 @@ class ImageRepository implements ImageRepositoryInterface
         return $image;
     }
 
-    public function getById($imageId)
+    public function getById($imageId): ImageInterface
     {
         $image = $this->imageFactory->create();
         $this->resource->load($image, $imageId);
@@ -75,7 +93,7 @@ class ImageRepository implements ImageRepositoryInterface
         return $image;
     }
 
-    public function getByKey($key)
+    public function getByKey($key): ImageInterface
     {
         $filter = $this->filterFactory->create()
             ->setField(ImageInterface::KEY)
@@ -91,14 +109,14 @@ class ImageRepository implements ImageRepositoryInterface
 
         $items = $this->getList($searchCriteria)->getItems();
 
-        if( count($items) === 0 ) {
+        if (count($items) === 0) {
             throw new NoSuchEntityException(__('Image with key "%1" does not exist.', $key));
         }
 
         return array_values($items)[0];
     }
 
-    public function existsByKey($key)
+    public function existsByKey($key): bool
     {
         try {
             $this->getByKey($key);
@@ -108,8 +126,11 @@ class ImageRepository implements ImageRepositoryInterface
         }
     }
 
-    public function getList(SearchCriteriaInterface $searchCriteria)
+    public function getList(SearchCriteriaInterface $searchCriteria = null)
     {
+        if (!$searchCriteria) {
+            $searchCriteria = $this->searchCriteriaFactory->create();
+        }
         $collection = $this->imageCollectionFactory->create();
         $this->collectionProcessor->process($searchCriteria, $collection);
         $searchResults = $this->searchResultsFactory->create();
@@ -136,18 +157,21 @@ class ImageRepository implements ImageRepositoryInterface
         return $this->getList($searchCriteria);
     }
 
-    public function delete(ImageInterface $image)
+    public function delete(ImageInterface $image): bool
     {
         try {
             /** @var AbstractModel $image */
             $this->resource->delete($image);
-        } catch( \Exception $exception ) {
-            throw new CouldNotDeleteException(__('Could not delete the page: %1', $exception->getMessage()), $exception);
+        } catch (\Exception $exception) {
+            throw new CouldNotDeleteException(
+                __('Could not delete the page: %1', $exception->getMessage()),
+                $exception
+            );
         }
         return true;
     }
 
-    public function deleteById($imageId)
+    public function deleteById($imageId): bool
     {
         return $this->delete($this->getById($imageId));
     }

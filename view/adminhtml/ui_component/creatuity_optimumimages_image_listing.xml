@@ -5,7 +5,7 @@
             <item name="provider" xsi:type="string">creatuity_optimumimages_image_listing.creatuity_optimumimages_image_listing_data_source</item>
             <item name="deps" xsi:type="string">creatuity_optimumimages_image_listing.creatuity_optimumimages_image_listing_data_source</item>
         </item>
-        <item name="spinner" xsi:type="string">spinner_columns</item>
+        <item name="spinner" xsi:type="string">images_listing_columns</item>
         <item name="buttons" xsi:type="array">
             <item name="add" xsi:type="array">
                 <item name="name" xsi:type="string">add</item>
@@ -15,7 +15,7 @@
             </item>
         </item>
     </argument>
-    <dataSource name="nameOfDataSource">
+    <dataSource name="creatuity_optimumimages_image_listing_data_source">
         <argument name="dataProvider" xsi:type="configurableObject">
             <argument name="class" xsi:type="string">Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider</argument>
             <argument name="name" xsi:type="string">creatuity_optimumimages_image_listing_data_source</argument>
@@ -41,9 +41,22 @@
         <bookmark name="bookmarks"/>
         <filterSearch name="fulltext"/>
         <filters name="listing_filters"/>
+        <massaction name="listing_massaction">
+            <action name="delete">
+                <settings>
+                    <confirm>
+                        <message translate="true">Are you sure you want to delete selected items?</message>
+                        <title translate="true">Delete items</title>
+                    </confirm>
+                    <url path="creatuity_optimumimages/images/massDelete"/>
+                    <type>delete</type>
+                    <label translate="true">Delete</label>
+                </settings>
+            </action>
+        </massaction>
         <paging name="listing_paging"/>
     </listingToolbar>
-    <columns name="spinner_columns">
+    <columns name="images_listing_columns">
         <selectionsColumn name="ids">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
@@ -76,19 +89,12 @@
                 </item>
             </argument>
         </column>
-        <column name="origin_location">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="filter" xsi:type="string">text</item>
-                    <item name="editor" xsi:type="array">
-                        <item name="editorType" xsi:type="string">text</item>
-                        <item name="validation" xsi:type="array">
-                            <item name="required-entry" xsi:type="boolean">true</item>
-                        </item>
-                    </item>
-                    <item name="label" xsi:type="string" translate="true">Origin Location</item>
-                </item>
-            </argument>
+        <column name="origin_location" class="Creatuity\OptimumImages\Ui\Component\Listing\Column\Thumbnail" component="Magento_Ui/js/grid/columns/thumbnail">
+            <settings>
+                <hasPreview>1</hasPreview>
+                <label translate="true">Thumbnail</label>
+                <sortable>false</sortable>
+            </settings>
         </column>
         <column name="conversion_status">
             <argument name="data" xsi:type="array">

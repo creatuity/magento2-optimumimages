@@ -11,6 +11,9 @@ class Image extends Template implements BlockInterface
 {
     protected $_template = "widget/optimum_image.phtml";
 
+    /**
+     * @var ImageRepositoryInterface
+     */
     protected $imageRepository;
 
     protected $loadedImage = null;
@@ -38,7 +41,7 @@ class Image extends Template implements BlockInterface
      */
     public function getImage()
     {
-        if( is_null($this->loadedImage) ) {
+        if (is_null($this->loadedImage)) {
             $this->loadedImage = $this->imageRepository->getByKey($this->getData('image_key'));
         }
         return $this->loadedImage;

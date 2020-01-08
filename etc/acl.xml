@@ -6,6 +6,7 @@
                 <resource id="Magento_Backend::content">
                     <resource id="Magento_Backend::content_elements">
                         <resource id="Creatuity_OptimumImages::images" title="Optimum Images" translate="title" sortOrder="50" />
+                        <resource id="Creatuity_OptimumImages::sliders" title="Optimum Sliders" translate="title" sortOrder="50" />
                     </resource>
                 </resource>
                 <resource id="Magento_Backend::stores">

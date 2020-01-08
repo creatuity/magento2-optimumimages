@@ -2,14 +2,24 @@
 namespace Creatuity\OptimumImages\Model\Image;
 
 use Magento\Framework\App\Filesystem\DirectoryList;
+use Magento\Framework\Filesystem;
 use Magento\Framework\UrlInterface;
 use Magento\Store\Model\StoreManagerInterface;
-use Magento\Framework\Filesystem;
 
 class Config
 {
-    protected $storeManager;
+    /**
+     * Path in /pub/media directory
+     */
+    const ENTITY_MEDIA_PATH = 'creatuity/optimumimages';
 
+    /**
+     * @var StoreManagerInterface
+     */
+    protected $storeManager;
+    /**
+     * @var Filesystem
+     */
     protected $filesystem;
 
     public function __construct(StoreManagerInterface $storeManager, Filesystem $filesystem)
@@ -20,7 +30,7 @@ class Config
 
     public function getBaseMediaPath()
     {
-        return 'creatuity/optimumimages';
+        return self::ENTITY_MEDIA_PATH;
     }
 
     public function getTmpMediaUrl($file)

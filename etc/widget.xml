@@ -9,4 +9,13 @@
             </parameter>
         </parameters>
     </widget>
+    <widget class="Creatuity\OptimumImages\Block\Widget\Slider" id="creatuity_optimumimages_slider">
+        <label>Creatuity Optimum Slider</label>
+        <description>Lorem ipsum</description>
+        <parameters>
+            <parameter name="slider_key" sort_order="10" visible="true" xsi:type="text">
+                <label>Slider Key</label>
+            </parameter>
+        </parameters>
+    </widget>
 </widgets>

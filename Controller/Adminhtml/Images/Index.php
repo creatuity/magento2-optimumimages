@@ -1,30 +1,14 @@
 <?php
+declare(strict_types=1);
 
 namespace Creatuity\OptimumImages\Controller\Adminhtml\Images;
 
-use Magento\Backend\App\Action;
-use Magento\Framework\View\Result\PageFactory;
-
-class Index extends Action
+class Index extends AbstractImages
 {
-    protected $resultPageFactory;
-
-    public function __construct(Action\Context $context, PageFactory $resultPageFactory)
-    {
-        parent::__construct($context);
-        $this->resultPageFactory = $resultPageFactory;
-    }
-
     public function execute()
     {
-        $resultPage = $this->resultPageFactory->create();
-        $resultPage->getConfig()->getTitle()->prepend((__('Images')));
-
-        return $resultPage;
-    }
-
-    protected function _isAllowed()
-    {
-        return $this->_authorization->isAllowed('Creatuity_OptimumImages::images');
+        $this->initPage();
+        $this->prependTitle(__('Images'));
+        $this->renderPage();
     }
 }

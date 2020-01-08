@@ -2,23 +2,64 @@
 namespace Creatuity\OptimumImages\Api;
 
 use Creatuity\OptimumImages\Api\Data\ImageInterface;
+use Creatuity\OptimumImages\Api\Data\ImageSearchResultsInterface;
 use Magento\Framework\Api\SearchCriteriaInterface;
+use Magento\Framework\Exception\CouldNotDeleteException;
+use Magento\Framework\Exception\NoSuchEntityException;
 
 interface ImageRepositoryInterface
 {
-    public function save(ImageInterface $image);
+    /**
+     * @param ImageInterface $image
+     * @return ImageInterface
+     */
+    public function save(ImageInterface $image): ImageInterface;
 
-    public function getById($imageId);
+    /**
+     * @param int $imageId
+     * @return ImageInterface
+     * @throws NoSuchEntityException
+     */
+    public function getById($imageId): ImageInterface;
 
-    public function getByKey($key);
+    /**
+     * @param string $key
+     * @return ImageInterface
+     * @throws NoSuchEntityException
+     */
+    public function getByKey($key): ImageInterface;
 
-    public function existsByKey($key);
+    /**
+     * @param string $key
+     * @return bool
+     */
+    public function existsByKey($key): bool;
 
-    public function getList(SearchCriteriaInterface $searchCriteria);
+    /**
+     * @param SearchCriteriaInterface|null $searchCriteria
+     * @return ImageSearchResultsInterface|mixed
+     */
+    public function getList(SearchCriteriaInterface $searchCriteria = null);
 
+    /**
+     * @param string $status
+     * @param int $pageSize
+     * @return ImageSearchResultsInterface|mixed
+     */
     public function getListByStatus($status, $pageSize = 1);
 
-    public function delete(ImageInterface $image);
+    /**
+     * @param ImageInterface $image
+     * @return bool
+     * @throws CouldNotDeleteException
+     */
+    public function delete(ImageInterface $image): bool;
 
-    public function deleteById($imageId);
+    /**
+     * @param int $imageId
+     * @return bool
+     * @throws CouldNotDeleteException
+     * @throws NoSuchEntityException
+     */
+    public function deleteById($imageId): bool;
 }

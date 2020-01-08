@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="creatuity_optimumimages_image" resource="default" engine="innodb" comment="Images table">
+        <column name="entity_id" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="true" comment="Image ID"/>
+        <column name="key" xsi:type="varchar" nullable="false" length="127" comment="Image Key"/>
+        <column name="alt" xsi:type="varchar" nullable="false" length="127" comment="Image Alt Value"/>
+        <column name="link_url" xsi:type="text" nullable="false" comment="Link URL"/>
+        <column name="dimension_type" xsi:type="varchar" nullable="false" length="63" comment="Dimension Type"/>
+        <column name="mobile_dimension" xsi:type="int" padding="10" nullable="false" comment="Mobile Dimension"/>
+        <column name="tablet_dimension" xsi:type="int" padding="10" nullable="false" comment="Tablet Dimension"/>
+        <column name="desktop_dimension" xsi:type="int" padding="10" nullable="false" comment="Desktop Dimension"/>
+        <column name="origin_location" xsi:type="varchar" nullable="false" length="255" comment="Origin Location"/>
+        <column name="mobile_location" xsi:type="varchar" nullable="false" length="255" comment="Mobile Location"/>
+        <column name="tablet_location" xsi:type="varchar" nullable="false" length="255" comment="Tablet Location"/>
+        <column name="desktop_location" xsi:type="varchar" nullable="false" length="255" comment="Desktop Location"/>
+        <column name="conversion_status" xsi:type="varchar" nullable="false" length="63" comment="Image Conversion Status"/>
+        <column name="created_at" xsi:type="timestamp" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At Timestamp"/>
+        <column name="updated_at" xsi:type="timestamp" nullable="false" default="CURRENT_TIMESTAMP" on_update="true" comment="Updated At Timestamp"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="CREATUITY_OPTIMUMIMAGES_IMAGE_KEY">
+            <column name="key"/>
+        </constraint>
+    </table>
+    <table name="creatuity_optimumimages_slider" resource="default" engine="innodb" comment="Sliders table">
+        <column name="entity_id" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="true" comment="Slider ID"/>
+        <column name="key" xsi:type="varchar" nullable="false" length="127" comment="Slider Key"/>
+        <column name="alt" xsi:type="varchar" nullable="false" length="127" comment="Slider Alt Value"/>
+        <column name="slide_delay" xsi:type="int" padding="10" nullable="false" comment="Slide delay"/>
+        <column name="created_at" xsi:type="timestamp" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At Timestamp"/>
+        <column name="updated_at" xsi:type="timestamp" nullable="false" default="CURRENT_TIMESTAMP" on_update="true" comment="Updated At Timestamp"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="CREATUITY_OPTIMUMIMAGES_SLIDER_KEY">
+            <column name="key"/>
+        </constraint>
+    </table>
+    <table name="creatuity_optimumimages_slider_image" resource="default" engine="innodb" comment="Slider - Image connection table">
+        <column name="slider_id" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="false" comment="Slider ID"/>
+        <column name="image_id" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="false" comment="Image ID"/>
+        <column name="position" xsi:type="int" padding="10" nullable="true" comment="Image Position"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="slider_id"/>
+            <column name="image_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="CRE_OPT_SLI_IMA_SLIDER_ID_CRE_OPT_SLI_ENTITY_ID"
+                    table="creatuity_optimumimages_slider_image" column="slider_id"
+                    referenceTable="creatuity_optimumimages_slider" referenceColumn="entity_id"
+                    onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="CRE_OPT_SLI_IMA_IMAGE_ID_CRE_OPT_IMA_ENTITY_ID"
+                    table="creatuity_optimumimages_slider_image" column="image_id"
+                    referenceTable="creatuity_optimumimages_image" referenceColumn="entity_id"
+                    onDelete="CASCADE"/>
+        <index referenceId="CREATUITY_OPTIMUMIMAGES_SLIDER_IMAGE_POSITION" indexType="btree">
+            <column name="position"/>
+        </index>
+    </table>
+</schema>

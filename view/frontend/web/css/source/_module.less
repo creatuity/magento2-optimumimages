@@ -1,0 +1,29 @@
+@import 'lib/_variables.less';
+@import 'lib/_slick.less';
+@import 'lib/_slick-theme.less';
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .optimum-slider{
+        .slick-slide{
+            img{
+                width: 100%;
+            }
+        }
+
+        div.image {
+            &:not(:first-child) {
+                display: none;
+            }
+        }
+    }
+    .optimum-slider.slick-initialized{
+        div.image {
+            &:not(:first-child) {
+                display: block;
+            }
+        }
+    }
+}

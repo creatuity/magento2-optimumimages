@@ -1,13 +1,15 @@
 <?php
+declare(strict_types=1);
+
 namespace Creatuity\OptimumImages\Controller\Adminhtml\Images;
 
 use Creatuity\OptimumImages\Model\Image\Config;
 use Creatuity\OptimumImages\Model\Image\Uploader;
-use Magento\Backend\App\Action;
+use Magento\Backend\App\Action\Context;
 use Magento\Framework\Controller\Result\RawFactory;
 use Magento\Framework\Image\AdapterFactory;
 
-class Upload extends Action
+class Upload extends AbstractImages
 {
     /**
      * @var RawFactory
@@ -20,15 +22,8 @@ class Upload extends Action
 
     protected $config;
 
-    /**
-     * @param Action\Context $context
-     * @param RawFactory $resultRawFactory
-     * @param Uploader $uploader
-     * @param AdapterFactory $adapterFactory
-     * @param Config $config
-     */
     public function __construct(
-        Action\Context $context,
+        Context $context,
         RawFactory $resultRawFactory,
         Uploader $uploader,
         AdapterFactory $adapterFactory,
@@ -44,7 +39,11 @@ class Upload extends Action
     public function execute()
     {
         try {
-            $this->uploader->addValidateCallback('catalog_product_image', $this->adapterFactory->create(), 'validateUploadFile');
+            $this->uploader->addValidateCallback(
+                'catalog_product_image',
+                $this->adapterFactory->create(),
+                'validateUploadFile'
+            );
             $result = $this->uploader->save($this->config->getAbsoluteBaseTmpMediaPath());
             unset($result['tmp_name']);
             unset($result['path']);

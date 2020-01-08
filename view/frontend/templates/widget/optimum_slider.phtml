@@ -1,0 +1,30 @@
+<?php
+/** @var Creatuity\OptimumImages\Block\Widget\Slider $block */
+$slider = $block->getSlider();
+$images = $block->getSliderImages();
+
+$uniqueId = uniqid('optimum-slider-')
+?>
+<div id="<?= $uniqueId ?>" class="optimum-slider">
+<?php foreach ($images as $image) : ?>
+<div class="image">
+    <a href="<?php echo $block->getLinkUrl($image) ?>" title="">
+        <picture>
+            <source media="(max-width: 465px)" srcset="<?php echo $block->getMediaUrl($image->getMobileLocation()); ?>" type="image/webp">
+            <source media="(max-width: 600px)" srcset="<?php echo $block->getMediaUrl($image->getTabletLocation()); ?>" type="image/webp">
+            <source srcset="<?php echo $block->getMediaUrl($image->getDesktopLocation()); ?>" type="image/webp">
+            <img src="<?php echo $block->getMediaUrl($image->getOriginLocation()); ?>" alt="<?php echo $image->getAlt()?>">
+        </picture>
+    </a>
+</div>
+<?php endforeach; ?>
+</div>
+<script type="text/x-magento-init">
+    {
+        "#<?= $uniqueId ?>": {
+            "Creatuity_OptimumImages/js/optimum-slider": {
+                "slideDelay": <?= $slider->getSlideDelay() ?>
+            }
+        }
+    }
+</script>

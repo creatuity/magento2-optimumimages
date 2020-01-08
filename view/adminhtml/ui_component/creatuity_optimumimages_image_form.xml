@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">creatuity_optimumimages_image_form.creatuity_optimumimages_image_form_data_source</item>
+            <item name="deps" xsi:type="string">creatuity_optimumimages_image_form.creatuity_optimumimages_image_form_data_source</item>
+        </item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <settings>
+        <namespace>creatuity_optimumimages_image_form</namespace>
+        <dataScope>data</dataScope>
+        <buttons>
+            <button name="back">
+                <url path="*/*/index"/>
+                <class>back</class>
+                <label translate="true">Back</label>
+            </button>
+            <button name="reset">
+                <class>reset</class>
+                <label translate="true">Reset</label>
+            </button>
+            <button name="save" class="Creatuity\OptimumImages\Ui\Component\Image\SaveSplitButton"/>
+        </buttons>
+    </settings>
+    <dataSource name="creatuity_optimumimages_image_form_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+                <item name="submit_url" xsi:type="url" path="*/*/save"/>
+            </item>
+        </argument>
+        <dataProvider class="Creatuity\OptimumImages\Model\Image\DataProvider" name="creatuity_optimumimages_image_form_data_source">
+            <settings>
+                <primaryFieldName>entity_id</primaryFieldName>
+                <requestFieldName>entity_id</requestFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <fieldset name="general">
+        <settings>
+            <label/>
+        </settings>
+        <field name="key" sortOrder="10" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">image</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Image Key</label>
+                <dataScope>key</dataScope>
+            </settings>
+        </field>
+        <field name="alt" sortOrder="20" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">image</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Image Description</label>
+                <dataScope>alt</dataScope>
+            </settings>
+        </field>
+        <field name="link_url" sortOrder="25" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">image</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Link URL</label>
+                <dataScope>link_url</dataScope>
+            </settings>
+        </field>
+        <field name="origin_image" sortOrder="30" formElement="imageUploader">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">image</item>
+                </item>
+            </argument>
+            <settings>
+                <elementTmpl>ui/form/element/uploader/image</elementTmpl>
+                <dataType>string</dataType>
+                <label translate="true">Origin Image</label>
+                <visible>true</visible>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataScope>origin_image</dataScope>
+                <notice translate="true">Allowed file types: jpg jpeg gif png svg. Not all browsers support all these formats!</notice>
+            </settings>
+            <formElements>
+                <imageUploader>
+                    <settings>
+                        <required>true</required>
+                        <uploaderConfig>
+                            <param xsi:type="url" name="url" path="creatuity_optimumimages/images/upload"/>
+                        </uploaderConfig>
+                        <previewTmpl>Magento_Catalog/image-preview</previewTmpl>
+                        <openDialogTitle>Media Gallery</openDialogTitle>
+                        <initialMediaGalleryOpenSubpath>creatuity/optimumimages</initialMediaGalleryOpenSubpath>
+                        <allowedExtensions>jpg jpeg gif png svg</allowedExtensions>
+                        <maxFileSize>2097152</maxFileSize>
+                    </settings>
+                </imageUploader>
+            </formElements>
+        </field>
+    </fieldset>
+    <fieldset name="conversion" sortOrder="10">
+        <settings>
+            <collapsible>false</collapsible>
+            <label translate="true">Image Conversion Settings</label>
+        </settings>
+        <field name="dimension_type" sortOrder="10" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">image</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Specified Dimension</label>
+                <dataScope>dimension_type</dataScope>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Creatuity\OptimumImages\Model\Image\Source\DimensionType"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="mobile_dimension" sortOrder="20" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">image</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>number</dataType>
+                <label translate="true">Mobile Size</label>
+                <dataScope>mobile_dimension</dataScope>
+            </settings>
+        </field>
+        <field name="tablet_dimension" sortOrder="30" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">image</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>number</dataType>
+                <label translate="true">Tablet Size</label>
+                <dataScope>tablet_dimension</dataScope>
+            </settings>
+        </field>
+        <field name="desktop_dimension" sortOrder="40" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">image</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>number</dataType>
+                <label translate="true">Desktop Size</label>
+                <dataScope>desktop_dimension</dataScope>
+            </settings>
+        </field>
+    </fieldset>
+</form>

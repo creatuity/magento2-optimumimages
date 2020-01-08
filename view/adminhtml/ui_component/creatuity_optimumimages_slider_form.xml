@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">creatuity_optimumimages_slider_form.creatuity_optimumimages_slider_form_data_source</item>
+        </item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <settings>
+        <label translate="true">Slider Configuration</label>
+        <dataScope>data</dataScope>
+        <namespace>creatuity_optimumimages_slider_form</namespace>
+        <deps>
+            <dep>creatuity_optimumimages_slider_form.creatuity_optimumimages_slider_form_data_source</dep>
+        </deps>
+        <buttons>
+            <button name="back">
+                <url path="*/*/index"/>
+                <class>back</class>
+                <label translate="true">Back</label>
+            </button>
+            <button name="reset">
+                <class>reset</class>
+                <label translate="true">Reset</label>
+            </button>
+            <button name="save" class="Creatuity\OptimumImages\Ui\Component\Slider\SaveSplitButton"/>
+        </buttons>
+    </settings>
+    <dataSource name="creatuity_optimumimages_slider_form_data_source" component="Magento_Ui/js/form/provider">
+        <settings>
+            <submitUrl path="*/*/save"/>
+        </settings>
+        <dataProvider class="Creatuity\OptimumImages\Ui\DataProvider\Slider\Form\DataProvider" name="creatuity_optimumimages_slider_form_data_source">
+            <settings>
+                <requestFieldName>entity_id</requestFieldName>
+                <primaryFieldName>entity_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <fieldset name="general" sortOrder="10">
+        <settings>
+            <label translate="true">General</label>
+            <collapsible>true</collapsible>
+            <opened>true</opened>
+            <dataScope>general</dataScope>
+        </settings>
+        <field name="key" formElement="input" sortOrder="10">
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Slider Key</label>
+            </settings>
+        </field>
+        <field name="alt" formElement="input" sortOrder="20">
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Slider Description</label>
+            </settings>
+        </field>
+        <field name="slide_delay" formElement="input" sortOrder="30">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">5000</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                    <rule name="validate-digits" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>number</dataType>
+                <label translate="true">Slide Delay [miliseconds]</label>
+            </settings>
+        </field>
+    </fieldset>
+    <fieldset name="images" sortOrder="50">
+        <settings>
+            <label translate="true">Images</label>
+            <collapsible>true</collapsible>
+            <opened>true</opened>
+            <dataScope>images</dataScope>
+        </settings>
+        <container name="assign_images_container" component="Magento_Ui/js/form/components/group" sortOrder="10">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="formElement" xsi:type="string">container</item>
+                    <item name="breakLine" xsi:type="boolean">false</item>
+                    <item name="dataScope" xsi:type="string" />
+                    <item name="label" xsi:type="string" />
+                </item>
+            </argument>
+            <button name="assign_images_button" template="ui/form/components/button/container">
+                <settings>
+                    <title translate="true">Assign Images</title>
+                    <dataScope />
+                </settings>
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="formElement" xsi:type="string">container</item>
+                        <item name="actions" xsi:type="array">
+                            <item name="0" xsi:type="array">
+                                <item name="targetName" xsi:type="string">creatuity_optimumimages_slider_form.creatuity_optimumimages_slider_form.images.assign_images_modal</item>
+                                <item name="actionName" xsi:type="string">toggleModal</item>
+                            </item>
+                        </item>
+                        <item name="additionalForGroup" xsi:type="boolean">true</item>
+                        <item name="additionalClasses" xsi:type="string">admin__field-medium</item>
+                    </item>
+                </argument>
+            </button>
+        </container>
+        <dynamicRows name="assigned_images" component="Magento_Ui/js/dynamic-rows/dynamic-rows-grid" sortOrder="20">
+            <argument name="data" xsi:type="array">
+                <item name="js_config" xsi:type="array">
+                    <item name="dataProvider" xsi:type="string">data.images.assign_images_grid</item>
+                    <item name="map" xsi:type="array">
+                        <item name="entity_id" xsi:type="string">entity_id</item>
+                        <item name="key" xsi:type="string">key</item>
+                        <item name="thumbnail" xsi:type="string">thumbnail_src</item>
+                    </item>
+                    <item name="identificationDRProperty" xsi:type="string">entity_id</item>
+                </item>
+            </argument>
+            <settings>
+                <label translate="true">Assigned Images</label>
+                <defaultRecord>false</defaultRecord>
+                <addButton>false</addButton>
+                <deleteProperty>true</deleteProperty>
+                <recordTemplate>record</recordTemplate>
+                <identificationProperty>entity_id</identificationProperty>
+                <links>
+                    <link name="insertData">${ $.provider }:${ $.dataProvider }</link>
+                </links>
+                <dndConfig>
+                    <param name="enabled" xsi:type="boolean">true</param>
+                    <param name="template" xsi:type="string">ui/dynamic-rows/cells/dnd</param>
+                </dndConfig>
+                <columnsHeader>true</columnsHeader>
+            </settings>
+            <container name="record" component="Magento_Ui/js/dynamic-rows/record">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="isTemplate" xsi:type="boolean">true</item>
+                        <item name="is_collection" xsi:type="boolean">true</item>
+                        <item name="dataScope" xsi:type="string" />
+                    </item>
+                </argument>
+                <field name="entity_id" formElement="input" sortOrder="10">
+                    <settings>
+                        <elementTmpl>ui/dynamic-rows/cells/text</elementTmpl>
+                        <dataType>number</dataType>
+                        <dataScope>entity_id</dataScope>
+                        <label translate="true">ID</label>
+                        <labelVisible>false</labelVisible>
+                    </settings>
+                </field>
+                <field name="key" formElement="input" sortOrder="20">
+                    <settings>
+                        <elementTmpl>ui/dynamic-rows/cells/text</elementTmpl>
+                        <dataType>text</dataType>
+                        <dataScope>key</dataScope>
+                        <label translate="true">Key</label>
+                        <labelVisible>false</labelVisible>
+                    </settings>
+                </field>
+                <field name="thumbnail" formElement="input" sortOrder="30">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="fit" xsi:type="boolean">false</item>
+                        </item>
+                    </argument>
+                    <settings>
+                        <elementTmpl>Creatuity_OptimumImages/dynamic-rows/cells/thumbnail</elementTmpl>
+                        <dataType>text</dataType>
+                        <dataScope>thumbnail</dataScope>
+                        <label translate="true">Thumbnail</label>
+                        <labelVisible>false</labelVisible>
+                    </settings>
+                </field>
+                <field name="position" formElement="input" sortOrder="40">
+                    <settings>
+                        <elementTmpl>ui/form/element/input</elementTmpl>
+                        <dataType>number</dataType>
+                        <dataScope>position</dataScope>
+                        <label translate="true">Position</label>
+                        <visible>false</visible>
+                    </settings>
+                </field>
+                <actionDelete name="actionDelete" template="Magento_Backend/dynamic-rows/cells/action-delete">
+                    <argument name="data" xsi:type="array" />
+                    <settings>
+                        <label translate="true">Unassign</label>
+                        <dataType>text</dataType>
+                        <componentType>actionDelete</componentType>
+                    </settings>
+                </actionDelete>
+            </container>
+        </dynamicRows>
+        <modal name="assign_images_modal">
+            <settings>
+                <options>
+                    <option name="title" xsi:type="string" translate="true">Assign Images</option>
+                    <option name="buttons" xsi:type="array">
+                        <item name="0" xsi:type="array">
+                            <item name="text" xsi:type="string">Cancel</item>
+                            <item name="class" xsi:type="string">action-secondary</item>
+                            <item name="actions" xsi:type="array">
+                                <item name="0" xsi:type="array">
+                                    <item name="targetName" xsi:type="string">${ $.name }</item>
+                                    <item name="actionName" xsi:type="string">actionCancel</item>
+                                </item>
+                            </item>
+                        </item>
+                        <item name="1" xsi:type="array">
+                            <item name="text" xsi:type="string" translate="true">Done</item>
+                            <item name="class" xsi:type="string">action-primary</item>
+                            <item name="actions" xsi:type="array">
+                                <item name="0" xsi:type="array">
+                                    <item name="targetName" xsi:type="string">index = assign_images_grid</item>
+                                    <item name="actionName" xsi:type="string">save</item>
+                                </item>
+                                <item name="1" xsi:type="array">
+                                    <item name="targetName" xsi:type="string">${ $.name }</item>
+                                    <item name="actionName" xsi:type="string">actionDone</item>
+                                </item>
+                            </item>
+                        </item>
+                    </option>
+                </options>
+            </settings>
+            <insertListing name="assign_images_grid">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="cssclass" xsi:type="string">noclass</item>
+                    </item>
+                </argument>
+                <settings>
+                    <autoRender>true</autoRender>
+                    <dataScope>assign_images_grid</dataScope>
+                    <ns>slider_image_listing</ns>
+                    <externalProvider>slider_image_listing.slider_image_listing_data_source</externalProvider>
+                    <selectionsProvider>slider_image_listing.slider_image_listing.images_listing_columns.ids</selectionsProvider>
+                    <dataLinks>
+                        <imports>false</imports>
+                        <exports>true</exports>
+                    </dataLinks>
+                    <externalFilterMode>true</externalFilterMode>
+                </settings>
+            </insertListing>
+        </modal>
+    </fieldset>
+</form>

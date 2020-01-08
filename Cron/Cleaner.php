@@ -1,27 +1,34 @@
 <?php
 namespace Creatuity\OptimumImages\Cron;
 
-use Creatuity\OptimumImages\Api\Data\ImageInterface;
-use Creatuity\OptimumImages\Api\Data\ImageSearchResultsInterface;
-use Creatuity\OptimumImages\Api\ImageRepositoryInterface;
-use Creatuity\OptimumImages\Helper\Config;
-use Creatuity\OptimumImages\Logger\Logger;
 use Creatuity\OptimumImages\Model\Image\Config as ImageConfig;
-use Creatuity\OptimumImages\Model\Image\Optimizer as ImageOptimizer;
-use Magento\Framework\Filesystem\Io\File;
+use Magento\Framework\Filesystem\Driver\File;
+use Magento\Framework\Filesystem\Glob;
+use Psr\Log\LoggerInterface;
 
 class Cleaner
 {
+    /**
+     * @var LoggerInterface
+     */
     protected $logger;
-
+    /**
+     * @var ImageConfig
+     */
     protected $imageConfig;
+    /**
+     * @var File
+     */
+    protected $filesystem;
 
     public function __construct(
-        Logger $logger,
-        ImageConfig $imageConfig
+        LoggerInterface $logger,
+        ImageConfig $imageConfig,
+        File $filesystem
     ) {
         $this->logger = $logger;
         $this->imageConfig = $imageConfig;
+        $this->filesystem = $filesystem;
     }
 
     public function execute()
@@ -40,11 +47,10 @@ class Cleaner
 
     private function removeEmptySubFolders($path)
     {
-        $empty=true;
-        foreach (glob($path.DIRECTORY_SEPARATOR."*") as $file)
-        {
-            $empty &= is_dir($file) && $this->removeEmptySubFolders($file);
+        $empty = true;
+        foreach (Glob::glob($path . DIRECTORY_SEPARATOR . "*") as $file) {
+            $empty &= $this->filesystem->isDirectory($file) && $this->removeEmptySubFolders($file);
         }
-        return $empty && rmdir($path);
+        return $empty && $this->filesystem->deleteDirectory($path);
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Creatuity\OptimumImages\Model\Image;
 
 use Creatuity\OptimumImages\Api\Data\ImageInterface;
@@ -6,6 +7,9 @@ use Creatuity\OptimumImages\Model\GdImaging;
 
 class Optimizer
 {
+    /**
+     * @var GdImaging
+     */
     private $gdImaging;
 
     public function __construct(GdImaging $gdImaging)
@@ -41,12 +45,15 @@ class Optimizer
     private function createWebpImage($srcImagePath, $dstImagePath, $newDimension, $dimensionType, $quality)
     {
         list($srcWidth, $srcHeight) = $this->gdImaging->getImageSize($srcImagePath);
-        list($dstWidth, $dstHeight) = $this->calculateNewImageSize($srcWidth, $srcHeight, $newDimension, $dimensionType);
+        list($dstWidth, $dstHeight) = $this->calculateNewImageSize($srcWidth,
+            $srcHeight,
+            $newDimension,
+            $dimensionType);
 
         $srcImage = $this->loadImage($srcImagePath);
         $dstImage = $this->resizeImage($srcImage, $dstWidth, $dstHeight, $srcWidth, $srcHeight);
 
-        if( ! $this->gdImaging->saveWebpImage($dstImage, $dstImagePath, $quality) ) {
+        if (!$this->gdImaging->saveWebpImage($dstImage, $dstImagePath, $quality)) {
             throw new \Exception(__("Could not save webp image"));
         }
     }
@@ -55,9 +62,9 @@ class Optimizer
     {
         $aspectRatio = $srcWidth / $srcHeight;
 
-        if( $dimensionType === ImageInterface::DIMENSION_TYPE_WIDTH ) {
+        if ($dimensionType === ImageInterface::DIMENSION_TYPE_WIDTH) {
             return [$newDimension, ($newDimension / $aspectRatio)];
-        } elseif( $dimensionType === ImageInterface::DIMENSION_TYPE_HEIGHT ) {
+        } elseif ($dimensionType === ImageInterface::DIMENSION_TYPE_HEIGHT) {
             return [($newDimension * $aspectRatio), $newDimension];
         } else {
             throw new \Exception(__("Dimension Type not supported"));
@@ -66,17 +73,17 @@ class Optimizer
 
     private function loadImage($path)
     {
-        if( ! \is_readable($path) ) {
+        if (!\is_readable($path)) {
             throw new \Exception(__("Cannot load image: '%1'", $path));
         }
 
         $extension = pathinfo($path)['extension'];
 
-        if( in_array($extension, ['jpg', 'jpeg']) ) {
+        if (in_array($extension, ['jpg', 'jpeg'])) {
             return $this->gdImaging->loadJpegImage($path);
         }
 
-        if( in_array($extension, ['png']) ) {
+        if (in_array($extension, ['png'])) {
             return $this->gdImaging->loadPngImage($path);
         }
 
@@ -87,7 +94,18 @@ class Optimizer
     {
         $dstImage = $this->gdImaging->loadNewImage($dstWidth, $dstHeight);
 
-        if( ! $this->gdImaging->resampleImage($dstImage, $srcImage, 0, 0, 0, 0, $dstWidth, $dstHeight, $srcWidth, $srcHeight) ) {
+        if (!$this->gdImaging->resampleImage(
+            $dstImage,
+            $srcImage,
+            0,
+            0,
+            0,
+            0,
+            $dstWidth,
+            $dstHeight,
+            $srcWidth,
+            $srcHeight
+        )) {
             throw new \Exception(__("Image could not be resized"));
         }
 
